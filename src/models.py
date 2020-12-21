@@ -3,7 +3,7 @@ from sqlalchemy import Column, String, Integer, create_engine
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
 from flask_migrate import Migrate
-import json
+from flask import jsonify
 
 
 database_path = 'postgresql://root:rootpwd@localhost:5432/castingAgency'
@@ -83,6 +83,16 @@ class Actor(db.Model,  SerializerMixin):
       
       def update(self):
             db.session.commit()
+
+      def format(self):
+            return {
+                  "id":self.id,
+                  "name":self.name,
+                  "age":self.age,
+                  "email":self.name,
+                  "phone":self.phone,
+                  "image_link":self.image_link
+            }
 
 
 

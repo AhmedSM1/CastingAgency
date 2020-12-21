@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, abort
 from flask_api import status
 from models import Movie, Actor, Cast
-from service import create_app, createActorService, getActorByIdService
+from service import create_app, createActorService, getActorByIdService, getAllActorService
 
 
 
@@ -44,7 +44,9 @@ def get_actor_by_id(actor_id):
 
 
 
-
+@app.route('/actors')
+def getAllActorsByPage():
+    return getAllActorService(request)
 
 
 
