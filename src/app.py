@@ -34,7 +34,6 @@ def create_actor():
   request_body =  request.get_json(force=True)
   if not ('name' in request_body and 'age' in request_body and 'email' in request_body and 'phone' in request_body):
       abort(422)
-
   return createActorService(request_body), status.HTTP_201_CREATED
 
 
@@ -45,5 +44,52 @@ def get_actor_by_id(actor_id):
 
 
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+
+
+
+
+
+@app.errorhandler(404)
+def notFound(error):
+    return jsonify({
+        "success": False,
+        "error": 404,
+        "message": "resource not found"
+    }), 404
+
+
+
+# @app.errorhandler(AuthError)
+# def auth_error(error):
+#     return jsonify({
+#         "success": False,
+#         "error": error.status_code,
+#         "message": error.error['description']
+#     }), error.status_code
+
+
+@app.errorhandler(401)
+def unauthorized(error):
+    return jsonify({
+        "success": False,
+        "error": 401,
+        "message": 'Unathorized'
+    }), 401
+
+
+@app.errorhandler(500)
+def internal_server_error(error):
+    return jsonify({
+        "success": False,
+        "error": 500,
+        "message": 'Internal Server Error'
+    }), 500
+
+
+@app.errorhandler(400)
+def bad_request(error):
+    return jsonify({
+        "success": False,
+        "error": 400,
+        "message": 'Bad Request'
+    }), 400

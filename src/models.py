@@ -87,6 +87,7 @@ class Actor(db.Model,  SerializerMixin):
 
 
 
+
 class Cast(db.Model):
      __tablename__ = 'Cast'
      id = db.Column(db.Integer, autoincrement=True, primary_key=True)
