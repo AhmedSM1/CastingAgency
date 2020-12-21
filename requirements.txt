@@ -1,0 +1,13 @@
+babel
+python-dateutil==2.6.0
+flask_cors
+flask-moment
+flask-wtf
+flask_sqlalchemy
+sqlalchemy
+sqlalchemy_serializer
+flask_api
+psycopg2
+flask_api
+flask_migrate
+flask_script
