@@ -4,9 +4,10 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
 from flask_migrate import Migrate
 from flask import jsonify
+from dotenv import load_dotenv
+load_dotenv()
 
-
-database_path = 'postgresql://root:rootpwd@localhost:5432/castingAgency'
+database_path = os.getenv('DATABASE_PATH')
 db = SQLAlchemy()
 
 
@@ -16,7 +17,6 @@ def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
-    db.create_all()
     migrate = Migrate(app, db)
     return db
 
@@ -49,6 +49,19 @@ class Movie(db.Model, SerializerMixin):
       
       def update(self):
             db.session.commit()
+
+      def format(self):
+            return {
+                  "id":self.id,
+                  "title":self.title,
+                  "release_date":self.release_date,
+                  "description":self.description,
+                  "genre":self.genre,
+                  "trailer_link":self.trailer_link,
+                  "poster_link":self.poster_link,
+
+            }
+
 
 
 
@@ -85,7 +98,7 @@ class Actor(db.Model,  SerializerMixin):
             db.session.commit()
 
       def format(self):
-            return {
+            return  {
                   "id":self.id,
                   "name":self.name,
                   "age":self.age,
@@ -107,4 +120,18 @@ class Cast(db.Model):
      def __init__(self, movie_id, actor_id):
            self.movie_id = movie_id
            self.actor_id = actor_id
+
+
+     def insert(self):
+          db.session.add(self)
+          db.session.commit()
+
+
+     def delete(self):
+            db.session.delete(self)
+            db.session.commit()
+      
+     def update(self):
+            db.session.commit()
+
           

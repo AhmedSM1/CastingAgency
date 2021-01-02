@@ -11,3 +11,10 @@ psycopg2
 flask_api
 flask_migrate
 flask_script
+python-dotenv
+requests
+authlib
+
+six
+python-jose==3.2.0
+python-decouple
