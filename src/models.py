@@ -4,10 +4,11 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_serializer import SerializerMixin
 from flask_migrate import Migrate
 from flask import jsonify
-from dotenv import load_dotenv
-load_dotenv()
+from decouple import config
 
-database_path = os.getenv('DATABASE_PATH')
+
+
+database_path = config('DATABASE_PATH')
 db = SQLAlchemy()
 
 
@@ -17,6 +18,7 @@ def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
+    db.create_all()
     migrate = Migrate(app, db)
     return db
 

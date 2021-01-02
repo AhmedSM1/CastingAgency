@@ -20,6 +20,8 @@ class AuthError(Exception):
         self.status_code = status_code
 
 
+
+
 def get_token_auth_header():
     """
       Obtains the access token from the Authorization Header
@@ -83,7 +85,7 @@ def check_permissions(permission, payload):
 
 def verify_decode_jwt(token):
     # verify the token using Auth0 /.well-known/jwks.json
-    jsonurl = urlopen( BASE_URL+'/.well-known/jwks.json')
+    jsonurl = urlopen(BASE_URL+'/.well-known/jwks.json')
     jwks = json.loads(jsonurl.read())
     unverified_header = jwt.get_unverified_header(token)
     rsa_key = {}

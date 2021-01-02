@@ -28,12 +28,12 @@ def create_app(test_config=None):
     'auth0',
     client_id= AUTH0_CLIENT_ID,
     api_base_url= BASE_URL,
-    access_token_url=BASE_URL+'/oauth/token',
+    access_token_url= BASE_URL+'/oauth/token',
     authorize_url=BASE_URL + '/authorize',
     client_kwargs={
         'scope': 'openid profile email',
     },
-)
+  )
 
 
 

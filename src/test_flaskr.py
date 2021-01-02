@@ -4,8 +4,9 @@ import json
 from flask_sqlalchemy import SQLAlchemy
 from models import setup_db, Actor, Movie, Cast
 from app import create_app
-from dotenv import load_dotenv
 from decouple import config
+
+
 
 class CastingAgencyUnitTesting(unittest.TestCase):
 
@@ -14,7 +15,6 @@ class CastingAgencyUnitTesting(unittest.TestCase):
         self.app = create_app()
         self.client = self.app.test_client
         self.database_path = config('TEST_DATABASE_PATH')
-        
 
         self.create_actor_request = {
            'name':'Ahmed',
