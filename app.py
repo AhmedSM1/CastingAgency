@@ -13,6 +13,7 @@ from six.moves.urllib.parse import urlencode
 AUTH0_CALLBACK_URL = config('AUTH0_CALLBACK_URL')
 AUTH0_CLIENT_ID = config('AUTH0_CLIENT_ID')
 BASE_URL = config('BASE_URL')
+AUTH0_LOGOUT_CALLBACK_URL = config('AUTH0_LOGOUT_CALLBACK_URL')
 
 # ----------------------------------------------------------------------------#
 # App Config.
@@ -76,10 +77,8 @@ def create_app(test_config=None):
   
   @app.route('/logout')
   def logout():
-    # Clear session stored data
     session.clear()
-     # Redirect user to logout endpoint
-    params = {'returnTo': AUTH0_CALLBACK_URL, 'client_id': AUTH0_CLIENT_ID}
+    params = {'returnTo': AUTH0_LOGOUT_CALLBACK_URL, 'client_id': AUTH0_CLIENT_ID}
     return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params)) 
 
 
