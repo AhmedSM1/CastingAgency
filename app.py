@@ -57,7 +57,7 @@ def create_app(test_config=None):
 
   @app.route('/login')
   def login():
-     return auth0.authorize_redirect(redirect_uri=AUTH0_CALLBACK_URL)
+     return auth0.authorize_redirect(redirect_uri='https://cast-mgt.us.auth0.com/userinfo')
   
   
   @app.route('/logout')
