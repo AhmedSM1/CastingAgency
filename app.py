@@ -51,6 +51,22 @@ def create_app(test_config=None):
   @app.route("/")
   def home():
       return "Works great! "
+
+  @app.route('/jwt')
+  @requires_auth
+  def jwt(payload):
+      return json.dumps(session['jwt_payload'], indent=4)
+
+  @app.route('/callback')
+  def callback_handling():
+    # Handles response from token endpoint
+    auth0.authorize_access_token()
+    resp = auth0.get('userinfo')
+    userinfo = resp.json()
+
+    # Store the user information in flask session.
+    session['jwt_payload'] = userinfo
+    return redirect('/jwt')
    
 
   @app.route('/login')
