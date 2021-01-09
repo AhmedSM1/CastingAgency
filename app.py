@@ -70,7 +70,7 @@ def create_app(test_config=None):
      """
      if not 'Authorization' in request.headers:
         abort(401)
-        data = request.headers['Authorization']
+     data = request.headers['Authorization']
 
      token = str.replace(str(data), 'Bearer ', '')
      try:
