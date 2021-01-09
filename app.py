@@ -21,6 +21,7 @@ if ENV_FILE:
 
 AUTH0_CALLBACK_URL = env['AUTH0_CALLBACK_URL']
 AUTH0_CLIENT_ID = env['AUTH0_CLIENT_ID']
+AUTH0_CLIENT_SECRET = env['AUTH0_CLIENT_SECRET']
 BASE_URL = env['BASE_URL']
 LOGOUT_CALLBACK_URL = env['AUTH0_LOGOUT_CALLBACK_URL']
 SECRET = env['SECRET']
@@ -38,6 +39,7 @@ def create_app(test_config=None):
   auth0 = oauth.register(
     'auth0',
     client_id= AUTH0_CLIENT_ID,
+    client_secret=AUTH0_CLIENT_SECRET,
     api_base_url= BASE_URL,
     access_token_url= BASE_URL+'/oauth/token',
     authorize_url=BASE_URL + '/authorize',
