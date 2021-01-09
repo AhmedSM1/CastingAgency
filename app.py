@@ -17,12 +17,11 @@ if ENV_FILE:
 
 
 
-
-AUTH0_CALLBACK_URL = env.get('AUTH0_CALLBACK_URL')
-AUTH0_CLIENT_ID = env.get('AUTH0_CLIENT_ID')
-BASE_URL = env.get('BASE_URL')
-LOGOUT_CALLBACK_URL = env.get('AUTH0_LOGOUT_CALLBACK_URL')
-SECRET = env.get('SECRET')
+AUTH0_CALLBACK_URL = env['AUTH0_CALLBACK_URL']
+AUTH0_CLIENT_ID = env['AUTH0_CLIENT_ID']
+BASE_URL = env['BASE_URL']
+LOGOUT_CALLBACK_URL = env['AUTH0_LOGOUT_CALLBACK_URL']
+SECRET = env['SECRET']
 
 # ----------------------------------------------------------------------------#
 # App Config.

@@ -14,7 +14,8 @@ class CastingAgencyUnitTesting(unittest.TestCase):
         """Define test variables and initialize app."""
         self.app = create_app()
         self.client = self.app.test_client
-        self.database_path = os.environ.get('LOCAL_TEST_DATABASE_PATH')
+        self.database_path = os.environ['LOCAL_TEST_DATABASE_PATH']
+        
 
         self.create_actor_request = {
            'name':'Ahmed',

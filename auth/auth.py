@@ -14,9 +14,9 @@ if ENV_FILE:
 
 
 
-BASE_URL =  env.get('BASE_URL')
-ALGORITHMS = env.get('ALGORITHMS')
-API_AUDIENCE = env.get('API_AUDIENCE')
+BASE_URL =  env['BASE_URL']
+ALGORITHMS = env['ALGORITHMS']
+API_AUDIENCE = env['API_AUDIENCE']
 
 
 class AuthError(Exception):

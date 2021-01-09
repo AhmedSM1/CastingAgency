@@ -15,7 +15,7 @@ if ENV_FILE:
 
 
 
-database_path = env.get('DATABASE_PATH')
+database_path = env['DATABASE_PATH']
 db = SQLAlchemy()
 
 
