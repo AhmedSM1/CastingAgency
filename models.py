@@ -15,8 +15,7 @@ if ENV_FILE:
 
 
 
-# database_path = env['DATABASE_PATH']
-database_path = 'postgresql://root:rootpwd@localhost:5432/castingAgency_test'
+database_path = env['DATABASE_PATH']
 db = SQLAlchemy()
 
 
