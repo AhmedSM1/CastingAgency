@@ -1,4 +1,3 @@
-import os
 from flask import Flask, request, abort, jsonify,url_for, redirect, session, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_api import status
@@ -9,12 +8,21 @@ from auth.auth import AuthError, requires_auth, API_AUDIENCE
 from decouple import config
 from authlib.integrations.flask_client import OAuth
 from six.moves.urllib.parse import urlencode
+from dotenv import load_dotenv, find_dotenv
+from os import environ as env
 
-AUTH0_CALLBACK_URL = os.environ.get('AUTH0_CALLBACK_URL')
-AUTH0_CLIENT_ID = os.environ.get('AUTH0_CLIENT_ID')
-BASE_URL = os.environ.get('BASE_URL')
-LOGOUT_CALLBACK_URL = os.environ.get('AUTH0_LOGOUT_CALLBACK_URL')
-SECRET = os.environ.get('SECRET')
+ENV_FILE = find_dotenv()
+if ENV_FILE:
+    load_dotenv(ENV_FILE)
+
+
+
+
+AUTH0_CALLBACK_URL = env.get('AUTH0_CALLBACK_URL')
+AUTH0_CLIENT_ID = env.get('AUTH0_CLIENT_ID')
+BASE_URL = env.get('BASE_URL')
+LOGOUT_CALLBACK_URL = env.get('AUTH0_LOGOUT_CALLBACK_URL')
+SECRET = env.get('SECRET')
 
 # ----------------------------------------------------------------------------#
 # App Config.

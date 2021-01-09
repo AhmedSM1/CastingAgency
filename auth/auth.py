@@ -3,14 +3,20 @@ from flask import request, _request_ctx_stack, abort
 from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
-import os
+from dotenv import load_dotenv, find_dotenv
+from os import environ as env
+
+
+ENV_FILE = find_dotenv()
+if ENV_FILE:
+    load_dotenv(ENV_FILE)
 
 
 
 
-BASE_URL =  os.environ.get('BASE_URL')
-ALGORITHMS = os.environ.get('ALGORITHMS')
-API_AUDIENCE = os.environ.get('API_AUDIENCE')
+BASE_URL =  env.get('BASE_URL')
+ALGORITHMS = env.get('ALGORITHMS')
+API_AUDIENCE = env.get('API_AUDIENCE')
 
 
 class AuthError(Exception):

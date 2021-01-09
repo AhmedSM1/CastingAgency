@@ -5,10 +5,17 @@ from sqlalchemy_serializer import SerializerMixin
 from flask_migrate import Migrate
 from flask import jsonify
 from decouple import config
+from dotenv import load_dotenv, find_dotenv
+from os import environ as env
+
+ENV_FILE = find_dotenv()
+if ENV_FILE:
+    load_dotenv(ENV_FILE)
 
 
 
-database_path = os.environ.get('DATABASE_PATH')
+
+database_path = env.get('DATABASE_PATH')
 db = SQLAlchemy()
 
 
