@@ -9,8 +9,7 @@ services:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: rootpwd
     volumes:
-        - ./data/initdb.sql:/docker-entrypoint-initdb.d/1-init-database.sql
-        - ./data/testdb.sql:/docker-entrypoint-initdb.d/2-init-database.sql
+        - ./data/dumb.sql:/docker-entrypoint-initdb.d/dumb.sql
 
 
   adminer:

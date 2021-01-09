@@ -32,7 +32,9 @@ def createActorService(request_body):
 
 def updateActorService(actor_id,request_body):
     try:
-        actor = findActor(actor_id)
+        actor = Actor.query.get(actor_id)
+        if not actor:
+            abort(404)
         name = request_body.get('name')
         age = request_body.get('age')
         email = request_body.get('email')
@@ -96,7 +98,10 @@ def deleteActorService(actor_id):
          actor = findActor(actor_id)
          actor.delete()
          removeActorFromAllMoviesWhenDelete(actor_id)
-         return "actor with id: "+ str(actor_id) +" was succeffully deleted"
+         return jsonify({
+          'success': True,
+           'actor id': actor_id
+           })
     except Exception as e:
         print("Exception occured:  "+ str(e))
         db.session.rollback()
@@ -212,7 +217,10 @@ def deleteMovieService(movie_id):
          movie= findMovie(movie_id)
          movie.delete()
          deleteAllActorsWhenMovieDeleted(movie_id)
-         return "movie with id: "+ str(movie_id) +" was succeffully deleted"
+         return jsonify({
+           'success': True,
+           'movie_id': movie_id
+        })
 
     except Exception as e:
         print("Exception occured:  "+ str(e))
@@ -256,7 +264,11 @@ def removeActorFromMovie(movie_id,actor_id):
         cast = Cast.query.filter(Cast.actor_id == actor_id, Cast.movie_id == movie_id).all()
         if not cast:
                 cast.delete()
-                return "Actor: " + actor.name + " have been unassigned from " + movie.name
+                return jsonify({
+                        'success': True,
+                        'actor id':actor_id,
+                        'movie id': movie_id
+        })
         else:
               abort(409)
     except Exception as e:

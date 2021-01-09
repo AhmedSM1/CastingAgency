@@ -15,7 +15,8 @@ if ENV_FILE:
 
 
 
-database_path = env['DATABASE_PATH']
+# database_path = env['DATABASE_PATH']
+database_path = 'postgresql://root:rootpwd@localhost:5432/castingAgency_test'
 db = SQLAlchemy()
 
 
@@ -111,6 +112,7 @@ class Actor(db.Model,  SerializerMixin):
                   "name":self.name,
                   "age":self.age,
                   "email":self.name,
+                  "gender":self.gender,
                   "phone":self.phone,
                   "image_link":self.image_link
             }

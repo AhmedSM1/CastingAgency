@@ -11,7 +11,7 @@ from six.moves.urllib.parse import urlencode
 from dotenv import load_dotenv, find_dotenv
 from os import environ as env
 import datetime
-import jwt
+
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
