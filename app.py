@@ -70,10 +70,13 @@ def create_app(test_config=None):
     # Handles response from token endpoint
     auth0.authorize_access_token()
     resp = auth0.get('userinfo')
-    token = auth0.get("id_token")
+    id_token = auth0.get("id_token")
     userinfo = resp.json()
+    token = id_token.json()
     # Store the user information in flask session.
     session['jwt_payload'] = userinfo
+    session['jwt_token'] = token
+
     return jsonify({
         'user info' : userinfo,
         'token': token
