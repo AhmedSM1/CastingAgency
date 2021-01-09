@@ -365,6 +365,40 @@ curl -X DELETE http://127.0.0.1:5000/movies/1 -H "Authorization: Bearer ACCESS_T
     "success": true
 }
 ```
+#### PATCH /cast/movie/\<int:movie_id\>/actor/\<int:actor_id\>
+
+
+- General: add an actor to a movie
+- Sample request:
+
+```bash
+curl -X DELETE http://127.0.0.1:5000/cast/movie/2/actor/1 -H "Authorization: Bearer ACCESS_TOKEN"
+```
+
+
+```json
+{
+
+    "actor": {
+        "age": 24,
+        "email": "Anya Taylor-Joy",
+        "id": 1,
+        "image_link": "https://www.imdb.com/name/nm5896355/mediaviewer/rm2529043456/",
+        "name": "Anya Taylor-Joy",
+        "phone": "+9665555555555"
+    },
+    "movie": {
+        "description": "Story about a mafia boss in the 50s",
+        "genre": "Crime",
+        "id": 2,
+        "poster_link": "https://images.app.goo.gl/mG2ARPW22BHbrLo76",
+        "release_date": "Mon, 29 Dec 1980 00:00:00 GMT",
+        "title": "Scarface",
+        "trailer_link": null
+    }
+
+}
+```
 
 ## Authentication and authorization
 
