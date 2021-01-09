@@ -65,21 +65,6 @@ def create_app(test_config=None):
   def home():
       return "Works great! "
 
-  @app.route('/callback', methods=['GET'])
-  def decode_jwt():
-    # Handles response from token endpoint
-    auth0.authorize_access_token()
-    response = auth0.authorized_response()
-    resp = auth0.get('userinfo')
-    userinfo = resp.json()
-
-    id_token = response.get("id_token")
-    print(id_token)
-    # Store the user information in flask session.
-    session['jwt_payload'] = userinfo
-    return jsonify({
-        'user info' : userinfo,
-    })
 
   @app.route('/login')
   def login():
@@ -91,6 +76,24 @@ def create_app(test_config=None):
     session.clear()
     params = {'returnTo': LOGOUT_CALLBACK_URL, 'client_id': AUTH0_CLIENT_ID}
     return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params)) 
+
+
+  @app.route('/callback', methods=['GET'])
+  def decode_jwt():
+    auth0.authorize_access_token()
+    session['access_token'] = auth0.token['access_token']
+    session['user_email'] = auth0.get('userinfo').json()['email']
+    return redirect(url_for('auth.welcome'))
+
+  @app.route('/welcome')
+  @require_auth
+  def welcome():
+      user_email = session['user_email']
+      token = session['access_token']
+      return jsonify({
+          'email': user_email,
+           'token': token
+      })
 
 
 
