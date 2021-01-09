@@ -4,13 +4,13 @@ from functools import wraps
 from jose import jwt
 from urllib.request import urlopen
 import os
-from decouple import config
 
 
 
-BASE_URL = config('BASE_URL')
-ALGORITHMS = config('ALGORITHMS')
-API_AUDIENCE = config('API_AUDIENCE')
+
+BASE_URL =  os.environ.get('BASE_URL')
+ALGORITHMS = os.environ.get('ALGORITHMS')
+API_AUDIENCE = os.environ.get('API_AUDIENCE')
 
 
 class AuthError(Exception):

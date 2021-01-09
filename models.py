@@ -8,7 +8,7 @@ from decouple import config
 
 
 
-database_path = config('DATABASE_PATH')
+database_path = os.environ.get('DATABASE_PATH')
 db = SQLAlchemy()
 
 

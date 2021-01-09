@@ -10,10 +10,11 @@ from decouple import config
 from authlib.integrations.flask_client import OAuth
 from six.moves.urllib.parse import urlencode
 
-AUTH0_CALLBACK_URL = config('AUTH0_CALLBACK_URL')
-AUTH0_CLIENT_ID = config('AUTH0_CLIENT_ID')
-BASE_URL = config('BASE_URL')
-AUTH0_LOGOUT_CALLBACK_URL = config('AUTH0_LOGOUT_CALLBACK_URL')
+AUTH0_CALLBACK_URL = os.environ.get('AUTH0_CALLBACK_URL')
+AUTH0_CLIENT_ID = os.environ.get('AUTH0_CLIENT_ID')
+BASE_URL = os.environ.get('BASE_URL')
+LOGOUT_CALLBACK_URL = os.environ.get('AUTH0_LOGOUT_CALLBACK_URL')
+SECRET = os.environ.get('SECRET')
 
 # ----------------------------------------------------------------------------#
 # App Config.
@@ -23,7 +24,7 @@ def create_app(test_config=None):
   app = Flask(__name__)
   setup_db(app)
   cors = CORS(app, resources={'/': {"origins": "*"}})
-  app.secret_key = config('SECRET')
+  app.secret_key = SECRET
   oauth = OAuth(app)
   auth0 = oauth.register(
     'auth0',
@@ -53,17 +54,32 @@ def create_app(test_config=None):
   def home():
       return "Works great! "
 
+  @app.route('/jwt')
+  @requires_auth
+  def jwt(payload):
+      return json.dumps(session['jwt_payload'], indent=4)
 
+  @app.route('/callback')
+  def callback_handling():
+    # Handles response from token endpoint
+    auth0.authorize_access_token()
+    resp = auth0.get('userinfo')
+    userinfo = resp.json()
+
+    # Store the user information in flask session.
+    session['jwt_payload'] = userinfo
+    return redirect('/jwt')
+   
 
   @app.route('/login')
   def login():
-     return auth0.authorize_redirect(redirect_uri='https://cast-mgt.us.auth0.com/userinfo')
+     return auth0.authorize_redirect(redirect_uri=AUTH0_CALLBACK_URL)
   
   
   @app.route('/logout')
   def logout():
     session.clear()
-    params = {'returnTo': AUTH0_LOGOUT_CALLBACK_URL, 'client_id': AUTH0_CLIENT_ID}
+    params = {'returnTo': LOGOUT_CALLBACK_URL, 'client_id': AUTH0_CLIENT_ID}
     return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params)) 
 
 

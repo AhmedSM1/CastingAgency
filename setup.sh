@@ -1,12 +1,11 @@
 export FLASK_APP=app
 export FLASK_ENV=development
-export LOCAL_DATABASE_PATH='postgresql://root:rootpwd@localhost:5432/castingAgency'
+export DATABASE_PATH='postgres://ucgtdlawsujvsm:b1f0d57f65fe519d602e7ce80a9b1533e841985fd9396ac47928cc9a2ae7052a@ec2-52-203-49-58.compute-1.amazonaws.com:5432/d7ph1mf8u7rdi6'
 export LOCAL_TEST_DATABASE_PATH='postgresql://root:rootpwd@localhost:5432/castingAgency_test '
 export SECRET='_5#y2LF4Q8z\n\xec]/'
-
 export BASE_URL='https://cast-mgt.us.auth0.com'
-
 export ALGORITHMS='RS256'
 export API_AUDIENCE='https://fsndb-cast-mgt.com/api'
 export AUTH0_CLIENT_ID='LekNT9m3tX5PHWzUW7RExT6DV14Ue6zz'
-export AUTH0_CALLBACK_URL='https://asm-casting-agency.herokuapp.com/'
+export AUTH0_CALLBACK_URL='https://asm-casting-agency.herokuapp.com/callback'
+export AUTH0_LOGOUT_CALLBACK_URL='https://asm-casting-agency.herokuapp.com/login'
