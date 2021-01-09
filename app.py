@@ -63,7 +63,7 @@ def create_app(test_config=None):
   def home():
       return "Works great! "
 
-  @app.route('/contents', methods=['GET'])
+  @app.route('/callback', methods=['GET'])
   def decode_jwt():
      """
       Check user token and return non-secret data
