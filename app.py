@@ -10,6 +10,8 @@ from authlib.integrations.flask_client import OAuth
 from six.moves.urllib.parse import urlencode
 from dotenv import load_dotenv, find_dotenv
 from os import environ as env
+import datetime
+import jwt
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -61,22 +63,33 @@ def create_app(test_config=None):
   def home():
       return "Works great! "
 
-  @app.route('/jwt')
-  @requires_auth('basic-permission')
-  def jwt(payload):
-      return json.dumps(session['jwt_payload'], indent=4)
+  @app.route('/contents', methods=['GET'])
+  def decode_jwt():
+     """
+      Check user token and return non-secret data
+     """
+     if not 'Authorization' in request.headers:
+        abort(401)
+        data = request.headers['Authorization']
+        token = str.replace(str(data), 'Bearer ', '')
+        try:
+          data = jwt.decode(token, SECRET, algorithms=['HS256'])
+        except:
+          abort(401)
 
-  @app.route('/callback')
-  def callback_handling():
-    # Handles response from token endpoint
-    auth0.authorize_access_token()
-    resp = auth0.get('userinfo')
-    userinfo = resp.json()
 
-    # Store the user information in flask session.
-    session['jwt_payload'] = userinfo
-    return redirect('/jwt')
-   
+        response = {'email': data['email'],
+                'exp': data['exp'],
+                'nbf': data['nbf'] }
+        return jsonify(**response)
+
+
+  def _get_jwt(user_data):
+        exp_time = datetime.datetime.utcnow() + datetime.timedelta(weeks=2)
+        payload = {'exp': exp_time,
+               'nbf': datetime.datetime.utcnow(),
+               'email': user_data['email']}
+        return jwt.encode(payload, SECRET, algorithm='HS256')
 
   @app.route('/login')
   def login():
