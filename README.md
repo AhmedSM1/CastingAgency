@@ -183,6 +183,42 @@ curl -X GET http://127.0.0.1:5000/actors -H "Content-Type: application/json" -H 
     "success": true,
     "total_actors": 8
 ```
+#### GET /actors/\<int:actor_id\>
+
+- General: get actors details by id
+- Sample request:
+
+```bash
+curl -X GET http://127.0.0.1:5000/actors/1 -H "Authorization: Bearer ACCESS_TOKEN"
+```
+
+- Sample response: <i>returns the  actor details</i>
+
+```json
+{
+    "age": 24,
+    "gender": "female",
+    "id": 1,
+    "image_link": "https://www.imdb.com/name/nm5896355/mediaviewer/rm2529043456/",
+    "movies": {
+        "movies": [
+            {
+                "description": "Story about a mafia boss in the 50s",
+                "genre": "Crime",
+                "id": 2,
+                "poster_link": "https://images.app.goo.gl/mG2ARPW22BHbrLo76",
+                "release_date": "Mon, 29 Dec 1980 00:00:00 GMT",
+                "title": "Scarface",
+                "trailer_link": null
+            }
+        ],
+        "number of movies": 1
+    },
+    "name": "ahmed",
+    "phone": "+9665555555555",
+    "success": true
+}
+```
 
 #### GET /movies
 
@@ -239,7 +275,73 @@ curl -X GET http://127.0.0.1:5000/movies -H "Content-Type: application/json" -H 
     "total_movies": 4
 }
 ```
+#### GET /movies/\<int:movie_id\>
 
+- General: get movie details by id
+- Sample request:
+
+```bash
+curl -X GET http://127.0.0.1:5000/movies/2 -H "Authorization: Bearer ACCESS_TOKEN"
+```
+
+- Sample response: <i>returns the  movie details with all the actors inside it </i>
+
+```json
+{
+
+    "cast": {
+        "actors": [
+            {
+                "age": 24,
+                "email": "ahmed",
+                "gender": "female",
+                "id": 1,
+                "image_link": "https://www.imdb.com/name/nm5896355/mediaviewer/rm2529043456/",
+                "name": "ahmed",
+                "phone": "+9665555555555"
+            },
+            {
+                "age": 25,
+                "email": "ahmed ",
+                "gender": "male",
+                "id": 3,
+                "image_link": "https://www.imdb.com/name/nm5896355/mediaviewer/rm2529043456/",
+                "name": "ahmed ",
+                "phone": "+9665555555555"
+            },
+            {
+                "age": 65,
+                "email": "jackie chan ",
+                "gender": "male",
+                "id": 4,
+                "image_link": "https://www.imdb.com/name/nm5896355/mediaviewer/rm2529043456/",
+                "name": "jackie chan ",
+                "phone": "+9665555555555"
+            },
+            {
+                "age": 55,
+                "email": "phil dunphy",
+                "gender": "male",
+                "id": 5,
+                "image_link": "https://www.imdb.com/name/nm5896355/mediaviewer/rm2529043456/",
+                "name": "phil dunphy",
+                "phone": "+9665555555555"
+            }
+        ],
+        "number of actors": 4
+    },
+    "movie": {
+        "description": "Story about a mafia boss in the 50s",
+        "genre": "Crime",
+        "id": 2,
+        "poster_link": "https://images.app.goo.gl/mG2ARPW22BHbrLo76",
+        "release_date": "Mon, 29 Dec 1980 00:00:00 GMT",
+        "title": "Scarface",
+        "trailer_link": null
+    },
+    "success": true
+}
+```
 #### POST /actors
 
 - General: create a new actor
