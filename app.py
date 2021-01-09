@@ -86,7 +86,7 @@ def create_app(test_config=None):
     return redirect(url_for('auth.welcome'))
 
   @app.route('/welcome')
-  @require_auth
+  @requires_auth
   def welcome():
       user_email = session['user_email']
       token = session['access_token']
