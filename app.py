@@ -69,18 +69,16 @@ def create_app(test_config=None):
   def decode_jwt():
     # Handles response from token endpoint
     auth0.authorize_access_token()
+    response = auth0.authorized_response()
     resp = auth0.get('userinfo')
-    id_token = auth0.get("id_token")
     userinfo = resp.json()
-    token = id_token.json()
+
+    id_token = response.get("id_token")
+    print(id_token)
     # Store the user information in flask session.
     session['jwt_payload'] = userinfo
-    session['jwt_token'] = token
-
     return jsonify({
         'user info' : userinfo,
-        'token': token
-
     })
 
   @app.route('/login')
