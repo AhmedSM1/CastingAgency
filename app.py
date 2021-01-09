@@ -62,7 +62,7 @@ def create_app(test_config=None):
       return "Works great! "
 
   @app.route('/jwt')
-  @requires_auth
+  @requires_auth('basic-permission')
   def jwt(payload):
       return json.dumps(session['jwt_payload'], indent=4)
 
