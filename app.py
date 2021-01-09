@@ -81,17 +81,12 @@ def create_app(test_config=None):
   @app.route('/callback', methods=['GET'])
   def decode_jwt():
     auth0.authorize_access_token()
-    session['access_token'] = auth0.token['access_token']
-    session['user_email'] = auth0.get('userinfo').json()['email']
-    return redirect('/welcome')
-
-  @app.route('/welcome')
-  @requires_auth('basic-permission')
-  def welcome():
-      user_email = session['user_email']
-      token = session['access_token']
-      return jsonify({
-          'email': user_email,
+    token = auth0.token['access_token']
+    email = auth0.get('userinfo').json()['email']
+    session['access_token'] = token
+    session['user_email'] = email
+    return jsonify({
+          'email': email,
            'token': token
       })
 
