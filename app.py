@@ -21,7 +21,6 @@ if ENV_FILE:
 
 AUTH0_CALLBACK_URL = env['AUTH0_CALLBACK_URL']
 AUTH0_CLIENT_ID = env['AUTH0_CLIENT_ID']
-AUTH0_CLIENT_SECRET = env['AUTH0_CLIENT_SECRET']
 BASE_URL = env['BASE_URL']
 LOGOUT_CALLBACK_URL = env['AUTH0_LOGOUT_CALLBACK_URL']
 SECRET = env['SECRET']
@@ -39,7 +38,6 @@ def create_app(test_config=None):
   auth0 = oauth.register(
     'auth0',
     client_id= AUTH0_CLIENT_ID,
-    client_secret=AUTH0_CLIENT_SECRET,
     api_base_url= BASE_URL,
     access_token_url= BASE_URL+'/oauth/token',
     authorize_url=BASE_URL + '/authorize',
@@ -63,13 +61,18 @@ def create_app(test_config=None):
 
   @app.route("/")
   def home():
-      return "Works great! "
+      if request.args.get('access_token'):
+          token = request.args.get('access_token')
+          return jsonify({
+          'Status':'Works great',
+          "Token": token
+          })
+      else:
+          return jsonify({
+              'Status':'Works Great'
+          })
 
 
-#   @app.route('/login')
-#   def login():
-#      return auth0.authorize_redirect(redirect_uri=AUTH0_CALLBACK_URL)
-  
   
   @app.route('/logout')
   def logout():
@@ -78,20 +81,6 @@ def create_app(test_config=None):
     return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params)) 
 
 
-#   @app.route('/callback', methods=['GET'])
-#   def decode_jwt():
-#     auth0.authorize_access_token()
-#     token = auth0.token['access_token']
-#     email = auth0.get('userinfo').json()['email']
-#     if session:
-#             session['access_token'] = token
-#             session['user_email'] = email
-#     return jsonify({
-#           'email': email,
-#            'token': token
-#       })
-
-# Returns the login url for auth0
   @app.route("/auth")
   def generate_auth_url():
     url = f'{BASE_URL}/authorize' \
