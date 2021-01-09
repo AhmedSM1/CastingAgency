@@ -72,7 +72,6 @@ def create_app(test_config=None):
     resp = auth0.get('userinfo')
     token = auth0.get("id_token")
     userinfo = resp.json()
-    jwt = token.json()
     # Store the user information in flask session.
     session['jwt_payload'] = userinfo
     return jsonify({
