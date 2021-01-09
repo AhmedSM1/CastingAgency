@@ -474,7 +474,7 @@ curl -X DELETE http://127.0.0.1:5000/movies/1 -H "Authorization: Bearer ACCESS_T
 - Sample request:
 
 ```bash
-curl -X DELETE http://127.0.0.1:5000/cast/movie/2/actor/1 -H "Authorization: Bearer ACCESS_TOKEN"
+curl -X PATCH  http://127.0.0.1:5000/cast/movie/2/actor/1 -H "Authorization: Bearer ACCESS_TOKEN"
 ```
 
 
