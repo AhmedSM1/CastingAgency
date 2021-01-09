@@ -83,7 +83,7 @@ def create_app(test_config=None):
     auth0.authorize_access_token()
     session['access_token'] = auth0.token['access_token']
     session['user_email'] = auth0.get('userinfo').json()['email']
-    return redirect(url_for('welcome'))
+    return redirect('/welcome')
 
   @app.route('/welcome')
   @requires_auth
