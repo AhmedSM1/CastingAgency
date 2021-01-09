@@ -66,9 +66,9 @@ def create_app(test_config=None):
       return "Works great! "
 
 
-  @app.route('/login')
-  def login():
-     return auth0.authorize_redirect(redirect_uri=AUTH0_CALLBACK_URL)
+#   @app.route('/login')
+#   def login():
+#      return auth0.authorize_redirect(redirect_uri=AUTH0_CALLBACK_URL)
   
   
   @app.route('/logout')
@@ -78,17 +78,31 @@ def create_app(test_config=None):
     return redirect(auth0.api_base_url + '/v2/logout?' + urlencode(params)) 
 
 
-  @app.route('/callback', methods=['GET'])
-  def decode_jwt():
-    auth0.authorize_access_token()
-    token = auth0.token['access_token']
-    email = auth0.get('userinfo').json()['email']
-    session['access_token'] = token
-    session['user_email'] = email
+#   @app.route('/callback', methods=['GET'])
+#   def decode_jwt():
+#     auth0.authorize_access_token()
+#     token = auth0.token['access_token']
+#     email = auth0.get('userinfo').json()['email']
+#     if session:
+#             session['access_token'] = token
+#             session['user_email'] = email
+#     return jsonify({
+#           'email': email,
+#            'token': token
+#       })
+
+# Returns the login url for auth0
+  @app.route("/auth")
+  def generate_auth_url():
+    url = f'{BASE_URL}/authorize' \
+        f'?audience={API_AUDIENCE}' \
+        f'&response_type=token&client_id=' \
+        f'{AUTH0_CLIENT_ID}&redirect_uri=' \
+        f'{AUTH0_CALLBACK_URL}'
     return jsonify({
-          'email': email,
-           'token': token
-      })
+        'url': url
+        })
+
 
 
 
