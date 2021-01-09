@@ -71,17 +71,14 @@ def create_app(test_config=None):
      if not 'Authorization' in request.headers:
         abort(401)
         data = request.headers['Authorization']
-        token = str.replace(str(data), 'Bearer ', '')
-        try:
+
+     token = str.replace(str(data), 'Bearer ', '')
+     try:
           data = jwt.decode(token, SECRET, algorithms=['HS256'])
-        except:
+     except:
           abort(401)
-
-
-        response = {'email': data['email'],
-                'exp': data['exp'],
-                'nbf': data['nbf'] }
-        return jsonify(**response)
+     response = jsonify(token=_get_jwt(data).decode('utf-8'))
+     return jsonify(**response)
 
 
   def _get_jwt(user_data):
