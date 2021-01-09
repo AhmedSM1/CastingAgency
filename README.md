@@ -246,8 +246,7 @@ curl -X GET http://127.0.0.1:5000/movies -H "Content-Type: application/json" -H 
 - Sample request:
 
 ```bash
-curl -X POST http://127.0.0.1:5000/actors -H "Content-Type: application/json" -H "Authorization: Bearer ACCESS_TOKEN"  -d '{{"name":"joe britchit","age":6,"email":"joe@Gmail.com","gender":"male","phone":"+9665555555555","image_link":"https://www.imdb.com/name/nm5896355/mediaviewer/rm2529043456/"
-}}'
+curl -X POST http://127.0.0.1:5000/actors -H "Content-Type: application/json" -H "Authorization: Bearer ACCESS_TOKEN"  -d '{"name":"joe britchit","age":6,"email":"joe@Gmail.com","gender":"male","phone":"+9665555555555","image_link":"https://www.imdb.com/name/nm5896355/mediaviewer/rm2529043456/"}'
 ```
 
 - Sample response: <i>returns the new actor id</i>
