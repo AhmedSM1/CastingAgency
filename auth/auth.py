@@ -6,15 +6,11 @@ from urllib.request import urlopen
 from dotenv import load_dotenv, find_dotenv
 from os import environ as env
 
-
 ENV_FILE = find_dotenv()
 if ENV_FILE:
     load_dotenv(ENV_FILE)
 
-
-
-
-BASE_URL =  env['BASE_URL']
+BASE_URL = env['BASE_URL']
 ALGORITHMS = env['ALGORITHMS']
 API_AUDIENCE = env['API_AUDIENCE']
 
@@ -24,8 +20,6 @@ class AuthError(Exception):
     def __init__(self, error, status_code):
         self.error = error
         self.status_code = status_code
-
-
 
 
 def get_token_auth_header():
@@ -66,7 +60,6 @@ def get_token_auth_header():
     return parts[1]
 
 
-
 def check_permissions(permission, payload):
     if payload.get('permissions'):
         print("permission exist")
@@ -88,10 +81,9 @@ def check_permissions(permission, payload):
             }, 401)
 
 
-
 def verify_decode_jwt(token):
     # verify the token using Auth0 /.well-known/jwks.json
-    jsonurl = urlopen(BASE_URL+'/.well-known/jwks.json')
+    jsonurl = urlopen(BASE_URL + '/.well-known/jwks.json')
     jwks = json.loads(jsonurl.read())
     unverified_header = jwt.get_unverified_header(token)
     rsa_key = {}
