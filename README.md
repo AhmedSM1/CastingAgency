@@ -201,7 +201,7 @@ curl -X GET http://127.0.0.1:5000/actors/1 -H "Authorization: Bearer ACCESS_TOKE
 ```json
 {
     "age": 24,
-    "gender": "female",
+    "gender": "male",
     "id": 1,
     "image_link": "https://www.imdb.com/name/nm5896355/mediaviewer/rm2529043456/",
     "movies": {
